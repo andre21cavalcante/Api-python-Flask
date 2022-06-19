@@ -18,7 +18,7 @@ class Usuario(db.Model):
     def to_json(self):
         return {"id": self.id, "nome": self.nome, "email": self.email, "telefone": self.telefone}
 
-# selecionartudo
+# selecionar tudo
 
 @app.route("/users", methods=["GET"])
 def seleciona_users():
@@ -27,9 +27,16 @@ def seleciona_users():
 
     return gera_response(200,"users", usuarios_json, "todos os usuarios ok")
 
-# selecionar um
+# selecionar um usuario chamando por id
+@app.route("/user/<id>")
+def seleciona_usuario(id):
+    usuario_objeto = Usuario.query.filter_by(id=id).first()
+    usuario_json = usuario_objeto.to_json()
+
+    return gera_response(200, "user", usuario_json, "usuario encontrado")
 
 # cadastrar
+
 # atualizar 
 # deletar
 
