@@ -1,3 +1,4 @@
+from crypt import methods
 from tkinter import E
 from flask import Flask, Response, request
 from flask_sqlalchemy import SQLAlchemy
@@ -36,7 +37,7 @@ def seleciona_usuario(id):
 
     return gera_response(200, "user", usuario_json, "usuario encontrado")
 
-# cadastrar
+# Criando endpoint de adicionar usuario
 @app.route("/user", methods=["POST"])
 def add_user():
     body = request.get_json()
@@ -48,12 +49,33 @@ def add_user():
         return gera_response(201, "user", user.to_json(), "usuario adicionado com sucesso")
     except Exception as e:
         print(e)
-        return gera_response(400, "user", {}, "erro ao cadastrar")
-
+        return gera_response(400, "user", {}, "erro ao adicionar")
 
 
 # atualizar 
+@app.route("/user/<id>", methods=["PUT"])
+def atualiza_usuario(id):
+    usuario_objeto = Usuario.query.filter_by(id=id).first()
+    body = request.get_json()
+
+    try:
+        if('nome' in body):
+            usuario_objeto.nome = body['nome']
+        if('email' in body):
+            usuario_objeto.email = body['email']
+        if('telefone' in body):
+            usuario_objeto.telefone = body['telefone']
+
+        db.session.add(usuario_objeto)
+        db.session.commit() 
+        return gera_response(200, "user", usuario_objeto.to_json(), "atualiado com sucesso")
+    except Exception as e:
+        print(e)
+        return gera_response(400, "user", {}, "erro ao atualizar")
+
+
 # deletar
+
 
 def gera_response(status, nome_do_conteudo, conteudo, mensagem=False):
     body = {}
