@@ -1,3 +1,4 @@
+from tkinter import E
 from flask import Flask, Response, request
 from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
@@ -28,7 +29,7 @@ def seleciona_users():
     return gera_response(200,"users", usuarios_json, "todos os usuarios ok")
 
 # selecionar um usuario chamando por id
-@app.route("/user/<id>")
+@app.route("/user/<id>", methods=["GET"])
 def seleciona_usuario(id):
     usuario_objeto = Usuario.query.filter_by(id=id).first()
     usuario_json = usuario_objeto.to_json()
@@ -36,6 +37,20 @@ def seleciona_usuario(id):
     return gera_response(200, "user", usuario_json, "usuario encontrado")
 
 # cadastrar
+@app.route("/user", methods=["POST"])
+def add_user():
+    body = request.get_json()
+
+    try:
+        user = Usuario(nome=body["nome"], email= body["email"], telefone= body["telefone"])
+        db.session.add(user)
+        db.session.commit()
+        return gera_response(201, "user", user.to_json(), "usuario adicionado com sucesso")
+    except Exception as e:
+        print(e)
+        return gera_response(400, "user", {}, "erro ao cadastrar")
+
+
 
 # atualizar 
 # deletar
