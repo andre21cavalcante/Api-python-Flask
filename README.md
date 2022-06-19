@@ -1,4 +1,11 @@
 
+## Ferramentas utilizadas:
+
+<ul> 
+<li>Terminal de sua escolha</li>
+<li>Postman ou equivalente</li>
+</ul>
+
 
 ## Instalação da Aplicação
 
