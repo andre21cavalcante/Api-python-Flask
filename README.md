@@ -1,5 +1,5 @@
 
-## Ferramentas utilizadas:
+## Ferramentas necessárias:
 
 <ul> 
 <li>Terminal de sua escolha</li>
