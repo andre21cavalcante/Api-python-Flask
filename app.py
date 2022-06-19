@@ -1,5 +1,3 @@
-from crypt import methods
-from tkinter import E
 from flask import Flask, Response, request
 from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
@@ -52,7 +50,7 @@ def add_user():
         return gera_response(400, "user", {}, "erro ao adicionar")
 
 
-# atualizar 
+# atualiza informaçoes do usuario
 @app.route("/user/<id>", methods=["PUT"])
 def atualiza_usuario(id):
     usuario_objeto = Usuario.query.filter_by(id=id).first()
@@ -74,7 +72,18 @@ def atualiza_usuario(id):
         return gera_response(400, "user", {}, "erro ao atualizar")
 
 
-# deletar
+# Deleta usuario
+@app.route("/user/<id>", methods=["DELETE"])
+def deleta_usuario(id):
+    usuario_objeto = Usuario.query.filter_by(id=id).first()
+
+    try:
+        db.session.delete(usuario_objeto)
+        db.session.commit()
+        return gera_response(200, "user", usuario_objeto.to_json(), "User Deletado com sucesso")
+    except Exception as e:
+        print(e)
+        return gera_response(400, "user", {}, "erro ao detelar")
 
 
 def gera_response(status, nome_do_conteudo, conteudo, mensagem=False):
