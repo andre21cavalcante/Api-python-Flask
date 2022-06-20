@@ -43,10 +43,10 @@ from app import db
 |Método|Rota|Descrição|
 | -----| -----| -----------|
 |**GET** | */users* | Mostra todos os usuarios|
-|**GET** | */user/{numero_id}* | Mostra o usuário de id escolhido|
-|**PUT** | */user/{numero_id}*| Atualiza as informações do id selecionado|
+|**GET** | */user/{id}* | Mostra o usuário de id escolhido|
+|**PUT** | */user/{id}*| Atualiza as informações do id selecionado|
 |**POST** | */user/* | Cria um novo usuário|
-|**DELETE** | */user/{numero_id}* | Deleta o usuário|
+|**DELETE** | */user/{id}* | Deleta o usuário|
 
 
 ---
